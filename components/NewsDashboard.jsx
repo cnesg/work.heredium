@@ -10,14 +10,16 @@ const BASE = { paper: "var(--surface)", ink: "var(--text)", stone: "#C9C5BE" };
 
 const SOURCE_LABELS = {
   heredium: "헤레디움", hankyung: "한국경제 arte", global: "해외 아트매거진",
-  music: "객석 (클래식)", all: "전체",
+  "music-gaeksuk": "객석", "music-hankyung": "한경", "music-daum": "다음 음악", "music-munhwa": "문화일보 공연",
+  all: "전체",
 };
 const SOURCE_COLORS = {
-  heredium: "#e3a54e", hankyung: "#c35131", global: "#8A6A3F", music: "#c35131",
+  heredium: "#e3a54e", hankyung: "#c35131", global: "#8A6A3F",
+  "music-gaeksuk": "#c35131", "music-hankyung": "#B4574A", "music-daum": "#8A4A3F", "music-munhwa": "#6B3A30",
 };
 const CATEGORY_SOURCES = {
   art: ["all", "heredium", "hankyung", "global"],
-  music: ["all", "music"],
+  music: ["all", "music-gaeksuk", "music-hankyung", "music-daum", "music-munhwa"],
 };
 
 function thisYear(dateStr) {
