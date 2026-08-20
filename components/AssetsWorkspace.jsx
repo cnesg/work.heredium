@@ -50,6 +50,15 @@ export default function AssetsWorkspace({ item, mode }) {
     setFiles(Object.fromEntries(entries));
   };
 
+
+const [liveInfo, setLiveInfo] = useState({ title: item.title, sub: item.sub });
+
+useEffect(() => {
+  loadSection(item.id, "meta", {}).then((meta) => {
+    setLiveInfo((prev) => ({ ...prev, ...meta }));
+  });
+}, [item.id]);
+  
   useEffect(() => {
     refreshFiles();
   }, [item.id]);
@@ -159,8 +168,8 @@ export default function AssetsWorkspace({ item, mode }) {
         </Link>
 
         <div className="mono text-xs" style={{ color: accent }}>{item.code}</div>
-        <h1 className="disp text-2xl mt-1" style={{ fontWeight: 600 }}>{item.title} · 자료실</h1>
-        <div className="text-sm mt-1" style={{ color: "var(--muted)" }}>{item.sub}</div>
+        <h1 className="disp text-2xl mt-1" style={{ fontWeight: 600 }}>{liveInfo.title} · 자료실</h1>
+        <div className="text-sm mt-1" style={{ color: "var(--muted)" }}>{liveInfo.sub}</div>
 
         {saveState.status !== "idle" && (
           <div className="mono text-xs mt-3 p-2" style={{
