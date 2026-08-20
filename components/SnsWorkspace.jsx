@@ -35,6 +35,14 @@ export default function SnsWorkspace({ item, mode }) {
   const [uploading, setUploading] = useState(false);
   const [renaming, setRenaming] = useState("");
 
+  const [liveInfo, setLiveInfo] = useState({ title: item.title });
+
+  useEffect(() => {
+    loadSection(item.id, "meta", {}).then((meta) => {
+      setLiveInfo((prev) => ({ ...prev, ...meta }));
+    });
+  }, [item.id]);
+  
   useEffect(() => {
     (async () => {
       const data = await loadSection(item.id, "sns", {});
@@ -127,7 +135,7 @@ export default function SnsWorkspace({ item, mode }) {
         </Link>
 
         <div className="mono text-xs" style={{ color: accent }}>{item.code}</div>
-        <h1 className="disp text-2xl mt-1" style={{ fontWeight: 600 }}>{item.title} · SNS 기획</h1>
+        <h1 className="disp text-2xl mt-1" style={{ fontWeight: 600 }}>{liveInfo.title} · SNS 기획</h1>
 
         {!supabase && (
           <div className="flex items-start gap-2 text-xs mt-4 p-3" style={{ background: "rgba(139,58,58,0.2)", border: "1px solid rgba(200,100,100,0.4)", color: "#E88080" }}>
