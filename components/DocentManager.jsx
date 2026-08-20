@@ -17,7 +17,15 @@ export default function DocentManager({ item }) {
   const [saveMsg, setSaveMsg] = useState("");
   const [loaded, setLoaded] = useState(false);
   const fileRef = useRef(null);
+  const [liveInfo, setLiveInfo] = useState({ title: item.title });
 
+  useEffect(() => {
+    loadSection(item.id, "meta", {}).then((meta) => {
+      setLiveInfo((prev) => ({ ...prev, ...meta }));
+    });
+  }, [item.id]);
+
+  
   useEffect(() => {
     loadSection(item.id, "docent", { sections: [], sourceLink: "" }).then((data) => {
       setSections(data.sections || []);
@@ -78,7 +86,7 @@ export default function DocentManager({ item }) {
         </Link>
 
         <div className="mono text-xs" style={{ color: PALETTE.accent }}>{item.code}</div>
-        <h1 className="disp text-2xl mt-1 mb-6" style={{ fontWeight: 600 }}>{item.title} · 도슨트 관리</h1>
+        <h1 className="disp text-2xl mt-1 mb-6" style={{ fontWeight: 600 }}>{liveInfo.title} · 도슨트 관리</h1>
 
         {!supabase && (
           <div className="flex items-start gap-2 text-xs mb-6 p-3" style={{ background: "rgba(139,58,58,0.2)", border: "1px solid rgba(200,100,100,0.4)", color: "#c35131" }}>
