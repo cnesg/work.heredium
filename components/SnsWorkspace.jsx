@@ -16,6 +16,14 @@ const P = {
 
 const CHANNEL_OPTIONS = ["Instagram", "TikTok", "YouTube Shorts", "네이버 블로그", "기타"];
 
+const detectPlatform = (url) => {
+  if (/instagram\.com/.test(url)) return "Instagram";
+  if (/tiktok\.com/.test(url)) return "TikTok";
+  if (/youtube\.com|youtu\.be/.test(url)) return "YouTube Shorts";
+  if (/blog\.naver\.com/.test(url)) return "네이버 블로그";
+  return null;
+};
+
 const newCampaign = (n) => ({
   id: `c${Date.now()}`,
   name: `${n}차 기획`,
@@ -42,7 +50,7 @@ export default function SnsWorkspace({ item, mode }) {
       setLiveInfo((prev) => ({ ...prev, ...meta }));
     });
   }, [item.id]);
-  
+
   useEffect(() => {
     (async () => {
       const data = await loadSection(item.id, "sns", {});
@@ -310,7 +318,11 @@ export default function SnsWorkspace({ item, mode }) {
               </select>
               <input type="date" value={p.postedAt || ""} onChange={(e) => updPub(p.id, { postedAt: e.target.value })}
                 className="text-xs px-2 py-2" style={{ border: `1px solid ${P.border}` }} />
-              <input value={p.url} onChange={(e) => updPub(p.id, { url: e.target.value })} placeholder="게시물 URL"
+              <input value={p.url} onChange={(e) => {
+                  const url = e.target.value;
+                  const detected = detectPlatform(url);
+                  updPub(p.id, detected ? { url, platform: detected } : { url });
+                }} placeholder="게시물 URL 붙여넣으면 플랫폼 자동 인식"
                 className="text-sm flex-1 px-3 py-2" style={{ border: `1px solid ${P.border}`, minWidth: 180 }} />
               {p.url && <a href={p.url} target="_blank" rel="noreferrer"><ExternalLink size={14} style={{ color: accent }} /></a>}
               <button onClick={() => delPub(p.id)}><Trash2 size={13} style={{ color: P.stone }} /></button>
