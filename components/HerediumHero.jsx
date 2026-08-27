@@ -62,12 +62,12 @@ export default function HerediumOpsHero() {
         <div>
           <div className="mono text-xs" style={{ color: PALETTE.stone }}>HEREDIUM OPS · 실무자 콘솔</div>
           <div className="disp text-2xl md:text-3xl mt-1" style={{ fontWeight: 500 }}>
-            {mode === "music" ? "이번 음악회 고르기" : "지난 전시 포스터 서가"}
+            {mode === "music" ? "음악회" : "포스터"}
           </div>
           <div className="text-sm mt-1 max-w-md" style={{ color: "#C9C5BE" }}>
             {mode === "music"
-              ? "LP를 넘기듯 진행·예정 음악회를 훑어보고 상세 정보를 확인하세요."
-              : "전시 포스터 서가를 넘기며 헤레디움이 열었던 전시를 확인하세요."}
+              ? "진행·예정·종료 음악회"
+              : "포스터를 넘기며 확인하세요"}
           </div>
         </div>
 
