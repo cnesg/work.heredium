@@ -7,26 +7,23 @@ export const revalidate = 0;
 const SOURCES = [
   {
     id: "heredium",
-    label: "헤레디움 기사모음",
+    label: "헤레디움",
     category: "art",
-    url: `https://docs.google.com/spreadsheets/d/151rd2uoLgST8Aw7M_0iDWEbPI7yDlepz_4AdAKOBLrw/export?format=csv`,
+    url: `https://docs.google.com/spreadsheets/d/1hwaj4YOVJMsJHqJmKtjtAwPjILTt13_trWSuCpHgFoY/export?format=csv&gid=0`,
     map: (r) => ({
-      loadedAt: r["일자"] || "",
-      publishedAt: r["일자"] || "",
-      press: r["언론사"] || "",
-      title: r["제목"] || "",
-      keywords: r["키워드"] ? r["키워드"].split(",").slice(0, 5).join(", ") : "",
-      summary: r["본문"] ? r["본문"].slice(0, 120) + "..." : "",
-      url: r["URL"] || "",
-      sentiment: r["분석제외 여부"] === "" ? "중립" : "분석불가",
-      writer: r["기고자"] || "",
+      loadedAt: r["적재일"] || "",
+      publishedAt: r["기사발행일"] || "",
+      press: r["보도언론사"] || "",
+      title: r["기사제목"] || "",
+      keywords: r["주요키워드"] || "",
+      summary: r["기사요약"] || "",
+      url: r["기사링크"] || "",
+      sentiment: "중립",
+      writer: "",
       source: "heredium",
       category: "art",
     }),
-    skip: (r) => {
-      const v = (r["분석제외 여부"] || "").trim();
-      return v && !["N", "n", "0", "false", "FALSE", "아니오"].includes(v);
-    },
+    skip: (r) => !r["기사제목"],
   },
   {
     id: "hankyung",
